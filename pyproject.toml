@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "code-butler"
+dynamic = ["version"]
+description = ""
+readme = "README.md"
+requires-python = ">=3.8"
+license = "Apache-2.0"
+keywords = []
+
+authors = [
+    { name = "Florent Clarret", email = "florent.clarret@gmail.com" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+    "click==8.1.7",
+    "pygithub==2.3.0",
+    "gitpython==3.1.42",
+]
+
+[project.urls]
+Source = "https://github.com/FlorentClarret/code-butler"
+
+[project.scripts]
+code-butler = "code_butler.cli:code_butler"
+
+[tool.hatch.version]
+path = "src/code_butler/__about__.py"

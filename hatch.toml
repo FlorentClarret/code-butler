@@ -1,0 +1,49 @@
+[envs.hatch-static-analysis]
+config-path = "ruff_defaults.toml"
+
+[envs.default]
+dependencies = [
+  "coverage[toml]>=6.5",
+  "pytest",
+]
+
+[[envs.default.matrix]]
+python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+[envs.default.scripts]
+test = "pytest {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
+cov-report = [
+  "- coverage combine",
+  "coverage report",
+]
+cov = [
+  "test-cov",
+  "cov-report",
+]
+
+[envs.types]
+dependencies = [
+  "mypy>=1.0.0",
+]
+[envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/code_butler tests}"
+
+[tool.coverage.run]
+source_pkgs = ["code_butler", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/code_butler/__about__.py",
+]
+
+[tool.coverage.paths]
+code_butler = ["src/code_butler", "*/code-butler/src/code_butler"]
+tests = ["tests", "*/code-butler/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
