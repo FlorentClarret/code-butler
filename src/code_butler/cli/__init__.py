@@ -10,10 +10,6 @@ from github import Auth, Github
 from code_butler.__about__ import __version__
 
 
-def repos():
-    yield "0k1745", "test-github-deprecation"
-
-
 @click.group(
     context_settings={"help_option_names": ["-h", "--help"]},
     invoke_without_command=True,
@@ -23,12 +19,15 @@ def repos():
     "-t",
     envvar="GITHUB_ACCESS_TOKEN",
 )
+@click.argument("repos", nargs=-1)
 @click.version_option(version=__version__, prog_name="Code Butler")
-def code_butler(token):
+def code_butler(token, repos):
     client = Github(auth=Auth.Token(token))
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        for org_name, repo_name in repos():
+        for repo in repos:
+            org_name, repo_name = repo.split("/")
+
             print(f"Repo: {org_name}/{repo_name}")
             repo = git.Repo.clone_from(
                 f"git@github.com:{org_name}/{repo_name}.git",
@@ -80,7 +79,7 @@ def code_butler(token):
                 print("Creating the PR...")
                 pullrequest = upstream_repo.create_pull(
                     base="main",
-                    head="{}:{}".format("FlorentClarret", "main"),
+                    head="{}:{}".format(client.get_user().login, "main"),
                     draft=True,
                     title="chore(ci): replace deprecated save-state and set-output commands",
                     body="See https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/",
