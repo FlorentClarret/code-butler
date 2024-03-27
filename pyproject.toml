@@ -33,6 +33,8 @@ dependencies = [
 
 [project.urls]
 Source = "https://github.com/FlorentClarret/code-butler"
+History = "https://github.com/FlorentClarret/code-butler/blob/main/HISTORY.md"
+Issues = "https://github.com/FlorentClarret/code-butler/issues"
 
 [project.scripts]
 code-butler = "code_butler.cli:code_butler"
