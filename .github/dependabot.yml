@@ -4,4 +4,4 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day-of-week: "monday"
+      day: "monday"
