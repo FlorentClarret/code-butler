@@ -17,7 +17,7 @@ Code Butler is a CLI tool that help you:
 Code Butler is distributed under the terms of the [Apache 2.0][license] license.
 
 
-[code-butler-website]: https://github.com/twpayne/chezmoi
+[code-butler-website]: https://github.com/FlorentClarret/code-butler
 [code-butler-test]: https://github.com/FlorentClarret/code-butler/actions/workflows/test.yaml
 [code-butler-test-badge]: https://github.com/FlorentClarret/code-butler/actions/workflows/test.yaml/badge.svg
 [pypi-version-badge]: https://img.shields.io/pypi/v/code-butler.svg?logo=pypi&label=PyPI&logoColor=gold
