@@ -29,6 +29,7 @@ dependencies = [
     "click==8.1.7",
     "pygithub==2.3.0",
     "gitpython==3.1.42",
+    "rich==13.7.1",
 ]
 
 [project.urls]
