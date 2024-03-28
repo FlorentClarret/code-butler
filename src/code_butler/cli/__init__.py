@@ -8,6 +8,7 @@ import git
 from github import Auth, Github
 
 from code_butler.__about__ import __version__
+from rich.console import Console
 
 
 @click.group(
@@ -87,3 +88,12 @@ def code_butler(token, repos):
                 print(f"PR: {pullrequest.html_url}")
 
     client.close()
+
+
+def main():  # no cov
+    try:
+        return code_butler(prog_name="code_butler", windows_expand_args=False)
+    except Exception:
+        console = Console()
+        console.print_exception(suppress=[click])
+        return 1
