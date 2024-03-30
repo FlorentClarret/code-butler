@@ -26,26 +26,23 @@ from code_butler.cli.run import run
 def code_butler(ctx, config_file):
     if config_file:
         path = Path(config_file)
-        app = Application(path)
+        app = Application(ctx.exit, path)
         if not path.is_file():
-            print(f"The selected config file `{path}` does not exist.")
-            ctx.exit(1)
+            app.abort(f"The selected config file `{path}` does not exist.")
     else:
-        app = Application()
+        app = Application(ctx.exit)
         if not app.config_file.path.is_file():
             try:
                 app.config_file.restore()
             except OSError:  # no cov
-                print(
+                app.abort(
                     f"Unable to create config file located at `{str(app.config_file.path)}`. Please check your permissions."
                 )
-                ctx.exit(1)
 
     try:
         app.config_file.load()
     except OSError as e:  # no cov
-        print(f"Error loading configuration: {e}")
-        ctx.exit(1)
+        app.abort(f"Error loading configuration: {e}")
 
     # Store it so it can be used by sub-commands
     ctx.obj = app

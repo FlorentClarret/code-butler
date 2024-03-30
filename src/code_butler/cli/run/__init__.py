@@ -19,8 +19,7 @@ def run(
 ):
     app = ctx.obj
     if not app.config_file.config.github.token:
-        print("No GitHub token found.")
-        ctx.exit(1)
+        app.abort("No GitHub token found.")
 
     client = Github(auth=Auth.Token(app.config_file.config.github.token))
 
