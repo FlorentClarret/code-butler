@@ -7,6 +7,7 @@ import tomli
 import tomli_w
 
 from code_butler.config.config import Config
+from code_butler.config.github import Github
 
 
 class ConfigFile:
@@ -28,7 +29,7 @@ class ConfigFile:
         self.path.write_text(content, encoding="utf-8")
 
     def restore(self):
-        self.save(tomli_w.dumps({"github": {"token": "", "fork_org": ""}}))
+        self.save(tomli_w.dumps({"github": Github().model_dump()}))
 
     @classmethod
     def get_default_location(cls) -> Path:
