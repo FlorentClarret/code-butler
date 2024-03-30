@@ -7,6 +7,7 @@ from typing import Iterable
 import click
 import git
 from github import Github, Auth
+from github.GithubObject import NotSet
 
 
 @click.command(short_help="Analyze a repo then fix and open a PR if needed.")
@@ -68,7 +69,9 @@ def run(
                     "chore(ci): replace deprecated save-state and set-output commands"
                 )
                 print("Creating fork...")
-                fork = upstream_repo.create_fork()
+                fork_org = app.config_file.config.github.fork_org or NotSet
+
+                fork = upstream_repo.create_fork(fork_org)
                 print(f"Adding fork as remote... {fork.clone_url}")
                 repository.create_remote("fork", fork.clone_url)
                 # wait for GH to fork it properly
@@ -79,7 +82,7 @@ def run(
                 print("Creating the PR...")
                 pullrequest = upstream_repo.create_pull(
                     base="main",
-                    head=f"{client.get_user().login}:main",
+                    head=f"{fork_org}:main",
                     draft=True,
                     title="chore(ci): replace deprecated save-state and set-output commands",
                     body="See https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/",
