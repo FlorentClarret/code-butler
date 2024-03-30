@@ -4,7 +4,6 @@ pull_request_rules:
       Notify the PR author when its pull request is removed from the merge
       queue.
     conditions:
-      - queue-dequeue-reason != none
       - queue-dequeue-reason != pr-merged
     actions:
       comment:
@@ -14,3 +13,7 @@ pull_request_rules:
 
           Sorry about that, but you can requeue the PR by using `@mergifyio
           requeue` if you think this was a mistake.
+queue_rules:
+  - name: default
+    merge_conditions:
+      - check-success = test
