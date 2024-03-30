@@ -8,16 +8,19 @@ import click
 import git
 from github import Github, Auth
 
-from code_butler.cli import Application
-
 
 @click.command(short_help="Analyze a repo then fix and open a PR if needed.")
-@click.pass_obj
+@click.pass_context
 @click.argument("repos", nargs=-1)
 def run(
-    app: Application,
+    ctx: click.Context,
     repos: Iterable[str],
 ):
+    app = ctx.obj
+    if not app.config_file.config.github.token:
+        print("No GitHub token found.")
+        ctx.exit(1)
+
     client = Github(auth=Auth.Token(app.config_file.config.github.token))
 
     with tempfile.TemporaryDirectory() as temp_dir:
