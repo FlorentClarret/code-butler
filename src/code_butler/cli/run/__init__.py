@@ -81,8 +81,8 @@ def run(
 
                 print("Creating the PR...")
                 pullrequest = upstream_repo.create_pull(
-                    base="main",
-                    head=f"{fork_org}:main",
+                    base=repository.active_branch.name,
+                    head=f"{fork_org}:{repository.active_branch.name}",
                     draft=True,
                     title="chore(ci): replace deprecated save-state and set-output commands",
                     body="See https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/",
