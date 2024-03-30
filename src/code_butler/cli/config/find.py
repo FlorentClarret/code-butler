@@ -12,4 +12,4 @@ if TYPE_CHECKING:
 @click.pass_obj
 def find(app: Application):
     """Show the location of the config file."""
-    print(app.config_file.path)
+    app.console.print(app.config_file.path)

@@ -13,4 +13,4 @@ if TYPE_CHECKING:
 def restore(app: Application):
     """Restore the config file to default settings."""
     app.config_file.restore()
-    print("Settings were successfully restored.")
+    app.console.print("Settings were successfully restored.")

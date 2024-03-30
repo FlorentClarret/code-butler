@@ -7,12 +7,13 @@ import tomli
 import tomli_w
 
 from code_butler.config.config import Config
+from code_butler.config.console import Console
 from code_butler.config.github import Github
 
 
 class ConfigFile:
     def __init__(self, path: Path | None = None):
-        self.path: Path = path or self.get_default_location()
+        self.path = path or self.get_default_location()
         self.config = cast(Config, None)
 
     def load(self):
@@ -29,7 +30,14 @@ class ConfigFile:
         self.path.write_text(content, encoding="utf-8")
 
     def restore(self):
-        self.save(tomli_w.dumps({"github": Github().model_dump()}))
+        self.save(
+            tomli_w.dumps(
+                {
+                    "github": Github().model_dump(),
+                    "console": Console().model_dump(),
+                }
+            )
+        )
 
     @classmethod
     def get_default_location(cls) -> Path:
