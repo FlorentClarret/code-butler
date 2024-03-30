@@ -38,6 +38,30 @@ def test_github():
                 "baz": {"key": "new_value"},
             },
         ),
+        (
+            "baz.key",
+            "true",
+            {
+                "foo": "bar",
+                "baz": {"key": True},
+            },
+        ),
+        (
+            "baz.key",
+            "false",
+            {
+                "foo": "bar",
+                "baz": {"key": False},
+            },
+        ),
+        (
+            "baz.key",
+            "TRUE",
+            {
+                "foo": "bar",
+                "baz": {"key": True},
+            },
+        ),
     ],
 )
 def test_set_field(config, key, value, expected_dict):

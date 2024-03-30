@@ -27,14 +27,14 @@ def run(
         for repo in repos:
             org_name, repo_name = repo.split("/")
 
-            print(f"Repo: {org_name}/{repo_name}")
+            app.console.print(f"Repo: {org_name}/{repo_name}")
             repository = git.Repo.clone_from(
                 f"git@github.com:{org_name}/{repo_name}.git",
                 Path(temp_dir) / org_name / repo_name,
                 depth=1,
             )
             upstream_repo = client.get_repo(f"{org_name}/{repo_name}")
-            print(f"Cloned repo in: {repository.working_dir}")
+            app.console.print(f"Cloned repo in: {repository.working_dir}")
 
             found = False
 
@@ -53,32 +53,32 @@ def run(
                 for file in repository.git.execute(
                     ["git", "grep", "-l", search]
                 ).splitlines():  # type: ignore
-                    print(f"{pattern} - File: {str(file)}")
+                    app.console.print(f"{pattern} - File: {str(file)}")
                     path = Path(repository.working_dir) / str(file)
                     content = path.read_text()
                     found = True
                     content = re.sub(pattern, replace, content)
-                    print("Updated file...")
+                    app.console.print("Updated file...")
                     path.write_text(content)
                     repository.index.add([str(file)])
 
             if found:
-                print("Committing...")
+                app.console.print("Committing...")
                 repository.index.commit(
                     "chore(ci): replace deprecated save-state and set-output commands"
                 )
-                print("Creating fork...")
+                app.console.print("Creating fork...")
                 fork_org = app.config_file.config.github.fork_org or NotSet
 
                 fork = upstream_repo.create_fork(fork_org)
-                print(f"Adding fork as remote... {fork.clone_url}")
+                app.console.print(f"Adding fork as remote... {fork.clone_url}")
                 repository.create_remote("fork", fork.clone_url)
                 # wait for GH to fork it properly
                 time.sleep(2)
-                print("Pushing...")
+                app.console.print("Pushing...")
                 repository.remotes.fork.push()
 
-                print("Creating the PR...")
+                app.console.print("Creating the PR...")
                 pullrequest = upstream_repo.create_pull(
                     base=repository.active_branch.name,
                     head=f"{fork_org}:{repository.active_branch.name}",
@@ -86,6 +86,6 @@ def run(
                     title="chore(ci): replace deprecated save-state and set-output commands",
                     body="See https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/",
                 )
-                print(f"PR: {pullrequest.html_url}")
+                app.console.print(f"PR: {pullrequest.html_url}")
 
     client.close()

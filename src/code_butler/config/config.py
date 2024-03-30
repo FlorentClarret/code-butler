@@ -1,8 +1,12 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING
 
+from code_butler.config.console import Console
 from code_butler.config.github import Github
+
+if TYPE_CHECKING:
+    from typing import Any
 
 
 class Config:
@@ -17,6 +21,10 @@ class Config:
     def github(self) -> Github:
         return Github(**self.__data.get("github", {}))
 
+    @property
+    def console(self) -> Console:
+        return Console(**self.__data.get("console", {}))
+
     def set_field(self, key: str, value: str):
         config = self.data
         fields = key.split(".")
@@ -26,4 +34,9 @@ class Config:
                 config[f] = {}
             config = config[f]
 
-        config[fields[-1]] = value
+        if value.lower() == "true":
+            config[fields[-1]] = True
+        elif value.lower() == "false":
+            config[fields[-1]] = False
+        else:
+            config[fields[-1]] = value
