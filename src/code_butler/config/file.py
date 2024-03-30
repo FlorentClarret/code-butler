@@ -21,6 +21,9 @@ class ConfigFile:
         return self.path.read_text()
 
     def save(self, content=None):
+        if content is None:
+            content = tomli_w.dumps(self.config.data)
+
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.path.write_text(content, encoding="utf-8")
 

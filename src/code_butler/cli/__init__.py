@@ -6,6 +6,7 @@ from code_butler.__about__ import __version__
 from rich.console import Console
 
 from code_butler.cli.application import Application
+from code_butler.cli.config import config
 from code_butler.cli.run import run
 
 
@@ -49,11 +50,8 @@ def code_butler(ctx, config_file):
     # Store it so it can be used by sub-commands
     ctx.obj = app
 
-    if not app.config_file.config.github.token:
-        print("No token provided.")
-        ctx.exit(1)
 
-
+code_butler.add_command(config)
 code_butler.add_command(run)
 
 

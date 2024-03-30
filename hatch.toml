@@ -5,6 +5,7 @@ config-path = "ruff_defaults.toml"
 dependencies = [
   "coverage[toml]>=6.5",
   "pytest",
+  "pytest-mock",
 ]
 
 [[envs.test.matrix]]
