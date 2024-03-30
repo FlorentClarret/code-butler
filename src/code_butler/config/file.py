@@ -28,7 +28,7 @@ class ConfigFile:
         self.path.write_text(content, encoding="utf-8")
 
     def restore(self):
-        self.save(tomli_w.dumps({"github": {"token": ""}}))
+        self.save(tomli_w.dumps({"github": {"token": "", "fork_org": ""}}))
 
     @classmethod
     def get_default_location(cls) -> Path:

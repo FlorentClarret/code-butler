@@ -39,4 +39,4 @@ def test_save(config_file):
 
 def test_restore(config_file):
     config_file.restore()
-    assert config_file.path.read_text() == '[github]\ntoken = ""\n'
+    assert config_file.path.read_text() == '[github]\ntoken = ""\nfork_org = ""\n'
