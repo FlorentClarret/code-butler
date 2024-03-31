@@ -9,7 +9,7 @@ from git import GitCommandError
 from github import Github, Auth
 from github.GithubObject import NotSet
 
-from code_butler.rules import ALL_RULES
+from code_butler.rules.github.deprecated_commands import DeprecatedCommands
 
 
 @click.command(short_help="Analyze a repo then fix and open a PR if needed.")
@@ -42,13 +42,13 @@ def run(
             found = False
             fork = None
 
-            for rule in [r(repository) for r in ALL_RULES]:
+            for rule in [DeprecatedCommands(repository)]:
                 default_branch.checkout()
-                for file in rule.detect():
+                for issue in rule.detect():
                     found = True
-                    app.console.print(f"{rule.id} - File: {str(file)}")
-                    rule.fix(file)
-                    repository.index.add([str(file)])
+                    app.console.print(f"{rule.id} - File: {str(issue.file_path)}")
+                    issue.fix()
+                    repository.index.add([str(issue.file_path)])
 
                 if found:
                     app.console.print("Creating branch...")
@@ -57,7 +57,7 @@ def run(
 
                     app.console.print("Committing...")
                     repository.index.commit(rule.commit_message())
-                    app.console.print("Creating fork...")
+
                     fork_org = app.config_file.config.github.fork_org or NotSet
 
                     if not fork:
@@ -80,6 +80,7 @@ def run(
 
 
 def __create_fork(app, upstream_repo, repository, fork_org):
+    app.console.print("Creating fork...")
     fork = upstream_repo.create_fork(fork_org, default_branch_only=True)
 
     try:

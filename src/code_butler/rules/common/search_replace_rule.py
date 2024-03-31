@@ -3,7 +3,8 @@ from abc import ABC
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from code_butler.rules.common.rule import Rule
+from code_butler.rules.issue import Issue
+from code_butler.rules.rule import Rule
 
 if TYPE_CHECKING:
     from git import Repo
@@ -17,13 +18,14 @@ class SearchAndReplaceRule(Rule, ABC):
         self.pattern = pattern
         self.replace = replace
 
-    def detect(self) -> "Iterable[str]":
-        return self.repository.git.execute(
+    def detect(self) -> "Iterable[Issue]":
+        for line in self.repository.git.execute(
             ["git", "grep", "-l", self.search]
-        ).splitlines()  # type: ignore
+        ).splitlines():  # type: ignore
+            yield Issue(self, self.repository, str(line))
 
-    def fix(self, file: str) -> None:
-        path = Path(self.repository.working_dir) / file
+    def fix(self, issue: "Issue") -> None:
+        path = Path(self.repository.working_dir) / issue.file_path
         content = path.read_text()
         new_content = re.sub(
             self.pattern,
