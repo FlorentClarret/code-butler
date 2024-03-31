@@ -1,6 +1,6 @@
 import os
 from unittest import mock
-from code_butler.config.github import Github
+from code_butler.config.models.github import Github
 
 
 @mock.patch.dict(os.environ, {"CODE_BUTLER_GITHUB_TOKEN": "my-token"})

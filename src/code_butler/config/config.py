@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from code_butler.config.console import Console
-from code_butler.config.github import Github
+from code_butler.config.models.console import Console
+from code_butler.config.models.github import Github
 
 if TYPE_CHECKING:
     from typing import Any
