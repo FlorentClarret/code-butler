@@ -7,8 +7,8 @@ import tomli
 import tomli_w
 
 from code_butler.config.config import Config
-from code_butler.config.console import Console
-from code_butler.config.github import Github
+from code_butler.config.models.console import Console
+from code_butler.config.models.github import Github
 
 
 class ConfigFile:

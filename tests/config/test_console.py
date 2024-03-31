@@ -1,7 +1,7 @@
 import os
 from unittest import mock
 
-from code_butler.config.console import Console
+from code_butler.config.models.console import Console
 
 
 @mock.patch.dict(os.environ, {"CODE_BUTLER_CONSOLE_COLOR": "false"})
