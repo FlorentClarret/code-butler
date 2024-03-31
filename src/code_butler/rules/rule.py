@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
+
 if TYPE_CHECKING:
+    from code_butler.rules.issue import Issue
     from git import Repo
     from typing import Iterable
 
@@ -15,12 +17,11 @@ class Rule(ABC):
         return self.__class__.__name__
 
     @abstractmethod
-    def detect(self) -> "Iterable[str]":
-        # TODO yield
+    def detect(self) -> "Iterable[Issue]":
         pass
 
     @abstractmethod
-    def fix(self, file: str) -> None:
+    def fix(self, issue: "Issue") -> None:
         pass
 
     @abstractmethod
