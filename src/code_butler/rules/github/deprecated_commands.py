@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 from code_butler.rules.github.save_state import SaveStateRule
@@ -9,7 +11,7 @@ if TYPE_CHECKING:
 
 
 class DeprecatedCommands(RuleGroup):
-    def __init__(self, repository: "Repo"):
+    def __init__(self, repository: Repo):
         super().__init__(
             repository, [SetOutputRule(repository), SaveStateRule(repository)]
         )

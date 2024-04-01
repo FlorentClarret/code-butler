@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
@@ -12,15 +14,15 @@ if TYPE_CHECKING:
 
 
 class RuleGroup(Rule, ABC):
-    def __init__(self, repository: "Repo", rules: "Iterable[Rule]"):
+    def __init__(self, repository: Repo, rules: Iterable[Rule]):
         super().__init__(repository)
         self.rules = list(rules)
 
-    def detect(self) -> "Iterable[Issue]":
+    def detect(self) -> Iterable[Issue]:
         for rule in self.rules:
             yield from rule.detect()
 
-    def fix(self, issue: "Issue") -> None:
+    def fix(self, issue: Issue) -> None:
         issue.fix()
 
     @abstractmethod

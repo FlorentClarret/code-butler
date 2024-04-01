@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
@@ -10,7 +12,7 @@ if TYPE_CHECKING:
 
 
 class Rule(ABC):
-    def __init__(self, repository: "Repo"):
+    def __init__(self, repository: Repo):
         self.repository = repository
 
     @property
@@ -18,11 +20,11 @@ class Rule(ABC):
         return self.__class__.__name__
 
     @abstractmethod
-    def detect(self) -> "Iterable[Issue]":
+    def detect(self) -> Iterable[Issue]:
         pass
 
     @abstractmethod
-    def fix(self, issue: "Issue") -> None:
+    def fix(self, issue: Issue) -> None:
         pass
 
     @abstractmethod
