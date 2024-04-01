@@ -1,0 +1,30 @@
+---
+repos:
+  - repo: https://github.com/zricethezav/gitleaks
+    rev: v8.18.2
+    hooks:
+      - id: gitleaks
+        args: ["detect", "--redact", "--verbose"]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: check-toml
+      - id: check-case-conflict
+      - id: check-symlinks
+      - id: detect-private-key
+      - id: forbid-submodules
+
+  - repo: https://github.com/markdownlint/markdownlint
+    rev: "v0.12.0"
+    hooks:
+      - id: markdownlint
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: "v1.35.1"
+    hooks:
+      - id: yamllint
