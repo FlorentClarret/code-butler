@@ -5,9 +5,10 @@
 | CI/CD   | [![CI - Test][code-butler-test-badge]][code-butler-test]                                                                                                                           |
 | Package | [![PyPI - Version][pypi-version-badge]][pypi-website] [![PyPI - Downloads][pypi-download-badge]][pypi-website] [![PyPI - Python Version][pypi-python-version-badge]][pypi-website] |
 
-# Overview
+## Overview
 
 Code Butler is a CLI tool that help you:
+
 1. Going through GitHub repositories,
 2. Find some code that is using deprecated stuff,
 3. And propose a PR to fix them.
@@ -15,7 +16,6 @@ Code Butler is a CLI tool that help you:
 ## License
 
 Code Butler is distributed under the terms of the [Apache 2.0][license] license.
-
 
 [code-butler-website]: https://github.com/FlorentClarret/code-butler
 [code-butler-test]: https://github.com/FlorentClarret/code-butler/actions/workflows/test.yaml
