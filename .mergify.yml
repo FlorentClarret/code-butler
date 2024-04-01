@@ -21,3 +21,10 @@ pull_request_rules:
     actions:
       merge:
         method: squash
+  - name: Automatic merge for pre-commit pull requests
+    conditions:
+      - author=pre-commit-ci[bot]
+      - check-success=pre-commit.ci - pr
+    actions:
+      queue:
+        method: squash
