@@ -7,8 +7,9 @@ from code_butler.rules.issue import Issue
 from code_butler.rules.rule import Rule
 
 if TYPE_CHECKING:
-    from git import Repo
     from typing import Iterable
+
+    from git import Repo
 
 
 class SearchAndReplaceRule(Rule, ABC):

@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
-
 if TYPE_CHECKING:
-    from code_butler.rules.issue import Issue
-    from git import Repo
     from typing import Iterable
+
+    from git import Repo
+
+    from code_butler.rules.issue import Issue
 
 
 class Rule(ABC):

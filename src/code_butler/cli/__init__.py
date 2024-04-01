@@ -1,14 +1,12 @@
 from __future__ import annotations
 
 from pathlib import Path
-
-import click
-
 from typing import TYPE_CHECKING
 
-from code_butler.__about__ import __version__
+import click
 from rich.console import Console
 
+from code_butler.__about__ import __version__
 from code_butler.cli.application import Application
 from code_butler.cli.config import config
 from code_butler.cli.run import run
@@ -43,7 +41,7 @@ def code_butler(ctx: click.Context, config_file: Optional[str]) -> None:
                 app.config_file.restore()
             except OSError:  # no cov
                 app.abort(
-                    f"Unable to create config file located at `{str(app.config_file.path)}`. Please check your permissions."
+                    f"Unable to create config file located at `{app.config_file.path!s}`. Please check your permissions."
                 )
 
     try:

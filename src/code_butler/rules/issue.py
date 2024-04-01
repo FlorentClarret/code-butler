@@ -1,8 +1,9 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from code_butler.rules.rule import Rule
     from git import Repo
+
+    from code_butler.rules.rule import Rule
 
 
 class Issue:

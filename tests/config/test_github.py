@@ -1,5 +1,6 @@
 import os
 from unittest import mock
+
 from code_butler.config.models.github import Github
 
 

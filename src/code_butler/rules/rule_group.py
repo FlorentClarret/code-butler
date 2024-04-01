@@ -4,9 +4,11 @@ from typing import TYPE_CHECKING
 from code_butler.rules.rule import Rule
 
 if TYPE_CHECKING:
-    from code_butler.rules.issue import Issue
-    from git import Repo
     from typing import Iterable
+
+    from git import Repo
+
+    from code_butler.rules.issue import Issue
 
 
 class RuleGroup(Rule, ABC):

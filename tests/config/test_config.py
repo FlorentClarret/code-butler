@@ -1,5 +1,4 @@
 import pytest
-
 from code_butler.config.config import Config
 
 

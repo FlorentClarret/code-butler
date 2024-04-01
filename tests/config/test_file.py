@@ -4,7 +4,6 @@ from unittest.mock import patch
 
 import pytest
 import tomli_w
-
 from code_butler.config.file import ConfigFile
 
 
