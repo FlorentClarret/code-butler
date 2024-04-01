@@ -12,6 +12,6 @@ if TYPE_CHECKING:
 @click.argument("key")
 @click.argument("value")
 @click.pass_obj
-def set_value(app: Application, key: str, value: str):
+def set_value(app: Application, key: str, value: str) -> None:
     app.config_file.config.set_field(key, value)
     app.config_file.save()

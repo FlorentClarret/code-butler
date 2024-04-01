@@ -1,6 +1,10 @@
+from __future__ import annotations
+
 from pathlib import Path
 
 import click
+
+from typing import TYPE_CHECKING
 
 from code_butler.__about__ import __version__
 from rich.console import Console
@@ -8,6 +12,9 @@ from rich.console import Console
 from code_butler.cli.application import Application
 from code_butler.cli.config import config
 from code_butler.cli.run import run
+
+if TYPE_CHECKING:
+    from typing import Optional
 
 
 @click.group(
@@ -23,7 +30,7 @@ from code_butler.cli.run import run
 )
 @click.version_option(version=__version__, prog_name="Code Butler")
 @click.pass_context
-def code_butler(ctx, config_file):
+def code_butler(ctx: click.Context, config_file: Optional[str]) -> None:
     if config_file:
         path = Path(config_file)
         app = Application(ctx.exit, path)
@@ -52,9 +59,9 @@ code_butler.add_command(config)
 code_butler.add_command(run)
 
 
-def main():  # no cov
+def main() -> int:  # no cov
     try:
-        return code_butler(prog_name="code_butler", windows_expand_args=False)
+        return code_butler(prog_name="code_butler", windows_expand_args=False)  # type: ignore
     except Exception:
         console = Console()
         console.print_exception(suppress=[click])

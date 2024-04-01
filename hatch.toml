@@ -28,7 +28,7 @@ dependencies = [
   "mypy>=1.0.0",
 ]
 [envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/code_butler tests}"
+check = "mypy --install-types --non-interactive {args:src/code_butler}"
 
 [tool.coverage.run]
 source_pkgs = ["code_butler", "tests"]

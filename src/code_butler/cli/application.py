@@ -12,7 +12,9 @@ if TYPE_CHECKING:
 
 
 class Application:
-    def __init__(self, exit_function: Callable, config_file: Path | None = None):
+    def __init__(
+        self, exit_function: Callable[[int], None], config_file: Path | None = None
+    ):
         self.__config_file = ConfigFile(config_file)
         self.__exit_function = exit_function
         self.__console = Console(
@@ -28,7 +30,7 @@ class Application:
     def console(self) -> Console:
         return self.__console
 
-    def abort(self, text: str | None = None, code: int = 1):
+    def abort(self, text: str | None = None, code: int = 1) -> None:
         if text:
             self.console.print(text)
         self.__exit_function(code)

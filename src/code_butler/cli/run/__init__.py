@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import tempfile
 import time
 from pathlib import Path
-from typing import Iterable
+from typing import TYPE_CHECKING
 
 import click
 import git
@@ -11,6 +13,14 @@ from github.GithubObject import NotSet
 
 from code_butler.rules.github.deprecated_commands import DeprecatedCommands
 
+if TYPE_CHECKING:
+    from code_butler.cli.application import Application
+    from git import Repo
+    from github.Repository import Repository
+    from github.GithubObject import Opt
+    from github.Organization import Organization
+    from typing import Iterable
+
 
 @click.command(short_help="Analyze a repo then fix and open a PR if needed.")
 @click.pass_context
@@ -18,7 +28,7 @@ from code_butler.rules.github.deprecated_commands import DeprecatedCommands
 def run(
     ctx: click.Context,
     repos: Iterable[str],
-):
+) -> None:
     app = ctx.obj
     if not app.config_file.config.github.token:
         app.abort("No GitHub token found.")
@@ -79,7 +89,12 @@ def run(
     client.close()
 
 
-def __create_fork(app, upstream_repo, repository, fork_org):
+def __create_fork(
+    app: Application,
+    upstream_repo: Repository,
+    repository: Repo,
+    fork_org: Organization | Opt[str],
+) -> Repository:
     app.console.print("Creating fork...")
     fork = upstream_repo.create_fork(fork_org, default_branch_only=True)
 
