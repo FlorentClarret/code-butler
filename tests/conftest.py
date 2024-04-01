@@ -1,12 +1,18 @@
+from __future__ import annotations
+
 import os
 import tempfile
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 import tomli_w
 from click.testing import CliRunner
 
 from code_butler.config.file import ConfigFile
+
+if TYPE_CHECKING:
+    from click import BaseCommand
 
 
 @pytest.fixture(autouse=True)
@@ -19,7 +25,7 @@ def config_file():
 
 
 class BoundCliRunner(CliRunner):
-    def __init__(self, command):
+    def __init__(self, command: BaseCommand):
         super().__init__()
         self.__command = command
 
@@ -29,7 +35,7 @@ class BoundCliRunner(CliRunner):
 
 
 @pytest.fixture(scope="session")
-def code_butler():
+def code_butler() -> None:
     from code_butler import cli
 
     return BoundCliRunner(cli.code_butler)

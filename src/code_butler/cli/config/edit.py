@@ -10,6 +10,6 @@ if TYPE_CHECKING:
 
 @click.command(short_help="Edit the config file with your default editor")
 @click.pass_obj
-def edit(app: Application):
+def edit(app: Application) -> None:
     """Edit the config file with your default editor."""
     click.edit(filename=str(app.config_file.path))

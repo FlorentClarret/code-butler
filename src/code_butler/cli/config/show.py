@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 @click.command(short_help="Show the contents of the config file")
 @click.pass_obj
-def show(app: Application):
+def show(app: Application) -> None:
     """Show the contents of the config file."""
     if not app.config_file.path.is_file():  # no cov
         app.console.print(

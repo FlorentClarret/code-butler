@@ -10,6 +10,6 @@ if TYPE_CHECKING:
 
 @click.command(short_help="Open the config location in your file manager")
 @click.pass_obj
-def explore(app: Application):
+def explore(app: Application) -> None:
     """Open the config location in your file manager."""
     click.launch(str(app.config_file.path), locate=True)

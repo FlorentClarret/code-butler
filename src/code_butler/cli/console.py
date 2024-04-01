@@ -10,5 +10,5 @@ class Console:
             highlight=False,
         )
 
-    def print(self, *args, **kwargs):
+    def print(self, *args, **kwargs) -> None:  # type: ignore
         self.__console.print(*args, **kwargs)

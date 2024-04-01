@@ -10,6 +10,6 @@ if TYPE_CHECKING:
 
 @click.command(short_help="Show the location of the config file")
 @click.pass_obj
-def find(app: Application):
+def find(app: Application) -> None:
     """Show the location of the config file."""
     app.console.print(app.config_file.path)

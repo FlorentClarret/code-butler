@@ -25,7 +25,7 @@ class Config:
     def console(self) -> Console:
         return Console(**self.__data.get("console", {}))
 
-    def set_field(self, key: str, value: str):
+    def set_field(self, key: str, value: str) -> None:
         config = self.data
         fields = key.split(".")
 

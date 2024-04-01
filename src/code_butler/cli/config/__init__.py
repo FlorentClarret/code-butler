@@ -9,7 +9,7 @@ from code_butler.cli.config.show import show
 
 
 @click.group(short_help="Manage the config file")
-def config():
+def config() -> None:
     pass
 
 

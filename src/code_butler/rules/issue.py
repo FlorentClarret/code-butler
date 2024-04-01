@@ -16,5 +16,5 @@ class Issue:
         self.repository = repository
         self.file_path = file_path
 
-    def fix(self):
+    def fix(self) -> None:
         self.rule.fix(self)

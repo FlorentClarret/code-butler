@@ -16,20 +16,20 @@ class ConfigFile:
         self.path = path or self.get_default_location()
         self.config = cast(Config, None)
 
-    def load(self):
+    def load(self) -> None:
         self.config = Config(tomli.loads(self.read()))
 
     def read(self) -> str:
         return self.path.read_text()
 
-    def save(self, content=None):
+    def save(self, content: str | None = None) -> None:
         if content is None:
             content = tomli_w.dumps(self.config.data)
 
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.path.write_text(content, encoding="utf-8")
 
-    def restore(self):
+    def restore(self) -> None:
         self.save(
             tomli_w.dumps(
                 {
