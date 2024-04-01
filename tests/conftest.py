@@ -8,7 +8,6 @@ from typing import TYPE_CHECKING
 import pytest
 import tomli_w
 from click.testing import CliRunner
-
 from code_butler.config.file import ConfigFile
 
 if TYPE_CHECKING:

@@ -8,18 +8,20 @@ from typing import TYPE_CHECKING
 import click
 import git
 from git import GitCommandError
-from github import Github, Auth
+from github import Auth, Github
 from github.GithubObject import NotSet
 
 from code_butler.rules.github.deprecated_commands import DeprecatedCommands
 
 if TYPE_CHECKING:
-    from code_butler.cli.application import Application
+    from typing import Iterable
+
     from git import Repo
-    from github.Repository import Repository
     from github.GithubObject import Opt
     from github.Organization import Organization
-    from typing import Iterable
+    from github.Repository import Repository
+
+    from code_butler.cli.application import Application
 
 
 @click.command(short_help="Analyze a repo then fix and open a PR if needed.")
@@ -56,7 +58,7 @@ def run(
                 default_branch.checkout()
                 for issue in rule.detect():
                     found = True
-                    app.console.print(f"{rule.id} - File: {str(issue.file_path)}")
+                    app.console.print(f"{rule.id} - File: {issue.file_path!s}")
                     issue.fix()
                     repository.index.add([str(issue.file_path)])
 
