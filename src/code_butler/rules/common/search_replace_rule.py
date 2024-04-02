@@ -5,6 +5,8 @@ from abc import ABC
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from git import GitCommandError
+
 from code_butler.rules.issue import Issue
 from code_butler.rules.rule import Rule
 
@@ -22,10 +24,13 @@ class SearchAndReplaceRule(Rule, ABC):
         self.replace = replace
 
     def detect(self) -> Iterable[Issue]:
-        for line in self.repository.git.execute(
-            ["git", "grep", "-l", self.search]
-        ).splitlines():  # type: ignore
-            yield Issue(self, self.repository, str(line))
+        try:
+            lines = self.repository.git.execute(["git", "grep", "-l", self.search])
+            for line in lines.splitlines():  # type: ignore
+                yield Issue(self, self.repository, str(line))
+        except GitCommandError:
+            # TODO warn with right log level
+            return
 
     def fix(self, issue: Issue) -> None:
         path = Path(self.repository.working_dir) / issue.file_path
