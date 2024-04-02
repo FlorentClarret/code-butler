@@ -9,6 +9,7 @@ import pytest
 import tomli_w
 from click.testing import CliRunner
 from code_butler.config.file import ConfigFile
+from git import Repo
 
 if TYPE_CHECKING:
     from click import BaseCommand
@@ -21,6 +22,22 @@ def config_file():
         file.write_text(tomli_w.dumps({"github": {"token": "my-token"}}))
         os.environ["CODE_BUTLER_CONFIG"] = str(file)
         yield ConfigFile(file)
+
+
+@pytest.fixture
+def repository():
+    with tempfile.TemporaryDirectory() as temp_dir:
+        path = Path(f"{temp_dir}/repo")
+        repo = Repo.init(str(path))
+
+        for i in range(1, 4):
+            (path / f"file{i}.txt").write_text(f"content{i}")
+            repo.index.add([f"file{i}.txt"])
+
+        repo.index.commit("Initial commit")
+        yield repo
+        # Workaround for https://github.com/gitpython-developers/GitPython/issues/387
+        repo.git.clear_cache()
 
 
 class BoundCliRunner(CliRunner):
