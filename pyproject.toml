@@ -28,7 +28,7 @@ classifiers = [
 dependencies = [
     "click==8.1.7",
     "platformdirs==4.2.2",
-    "pydantic==2.7.4",
+    "pydantic==2.8.2",
     "pydantic-settings==2.3.4",
     "pygithub==2.3.0",
     "gitpython==3.1.43",
